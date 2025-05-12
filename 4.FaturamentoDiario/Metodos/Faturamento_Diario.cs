@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _3.FaturamentoDiario.Metodos
+namespace _4.FaturamentoDiario.Metodos
 {
     public class Faturamento_Diario
     {

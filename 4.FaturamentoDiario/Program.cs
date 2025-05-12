@@ -1,4 +1,4 @@
-namespace _3.FaturamentoDiario
+namespace _4.FaturamentoDiario
 {
     internal static class Program
     {

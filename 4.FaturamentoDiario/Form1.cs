@@ -1,9 +1,9 @@
-using _3.FaturamentoDiario.Metodos;
+using _4.FaturamentoDiario.Metodos;
 using Newtonsoft.Json;
 using System.Data;
 using System.Text.Json.Serialization;
 
-namespace _3.FaturamentoDiario
+namespace _4.FaturamentoDiario
 {
     public partial class Form1 : Form
     {
@@ -12,9 +12,9 @@ namespace _3.FaturamentoDiario
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            var json = @"{
+		private void Form1_Load(object sender, EventArgs e)
+		{
+			var json = @"{
 ""faturamentodiario"":[
     {
 		""dia"": 1,
@@ -138,22 +138,32 @@ namespace _3.FaturamentoDiario
 	}]
                          }";
 
-            DataTable dt = new DataTable();
-            List<Faturamento_Diario>? faturamento_diario = JsonConvert.DeserializeObject<Faturamento>(json).FaturamentoDiario;
+			DataTable dt = new DataTable();
+			Faturamento faturamento = new Faturamento();
+			faturamento.FaturamentoDiario = JsonConvert.DeserializeObject<Faturamento>(json).FaturamentoDiario;
 
-			dt.Columns.Add("Dia",typeof(String));
-            dt.Columns.Add("Valor Faturamento", typeof(String));
+			dt.Columns.Add("Dia", typeof(String));
+			dt.Columns.Add("Valor Faturamento", typeof(String));
 
-            if (faturamento_diario != null)
+			if (faturamento.FaturamentoDiario != null)
 			{
-				foreach (Faturamento_Diario fat in faturamento_diario)
+				foreach (Faturamento_Diario fat in faturamento.FaturamentoDiario)
 				{
-					dt.Rows.Add(fat.Dia, String.Format("R${0}",fat.Valor.ToString("F2")));
-                }
-            }
+					dt.Rows.Add(fat.Dia, String.Format("R${0}", fat.Valor.ToString("F2")));
+				}
+			}
 
-			
+
 			dataGridView1.DataSource = dt;
+			label1.Text = $"O menor valor de faturamento ocorrido em um dia do mês: R${faturamento.MenorValorFaturamento.ToString("F2")}";
+			label4.Text = $"O maior valor de faturamento ocorrido em um dia do mês: R${faturamento.MaiorValorFaturamento.ToString("F2")}";
+			label3.Text = $"Total: R${faturamento.ValorFaturamentoTotal.ToString("F2")}";
+
+            label2.Text = $"Número de dias no mês em que o valor de faturamento diário foi superior à média mensal: {faturamento.CalculaDiasMaiorQueMediaMensal()} dias";
+
+			label1.Text += " (Ignora dias sem faturamento)";
+            label4.Text += " (Ignora dias sem faturamento)";
+
         }
     }
 }
