@@ -1,6 +1,6 @@
-﻿namespace _4.FaturamentoDiario
+﻿namespace _3.FaturamentoDiario
 {
-    partial class Form1
+    partial class Form1:Form
     {
         /// <summary>
         ///  Required designer variable.
